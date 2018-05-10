@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_editor" inherit_id="website.assets_editor" name="Website Page Assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/website_blank_page/static/src/js/new_blank_page.js"></script>
+            </xpath>
+        </template>
+
+        <!-- This extension allows setting no_nav and no_footer to templates inheriting website.layout-->
+        <template id="website_layout_optional_nav_and_footer"
+                  name="Optional nav and footer in website layout"
+                  inherit_id="website.layout"
+        >
+            <header position="attributes">
+                <attribute name="t-if">not no_nav</attribute>
+            </header>
+            <footer position="attributes">
+                <attribute name="t-if">not no_footer</attribute>
+            </footer>
+        </template>
+
+        <template id="default_blank_page">
+            <t t-name="website.'+str(page_name)+'"/>
+            <t t-call="website.layout">
+                <t t-set="no_nav" t-value="True"/>
+                <t t-set="no_footer" t-value="True"/>
+                <div id="wrap" class="oe_structure oe_empty" />
+            </t>
+        </template>
+    </data>
+</odoo>
